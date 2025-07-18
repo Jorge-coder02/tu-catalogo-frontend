@@ -20,14 +20,17 @@ export async function login(email, password) {
 }
 
 // 👨‍💼➕ Registro de usuario
-export async function register(email, password) {
-  const res = await fetch(`${BASE_URL}/register`, {
+export async function register(email, password, username) {
+  const res = await fetch(`${BASE_URL}/users/register`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ email, password }),
+    body: JSON.stringify({ email, password, username }),
   });
   const data = await res.json();
+  if (!res.ok) {
+    throw new Error(data.message || "Error al registrar usuario"); // ❌ Lanza el mensaje del backend como error
+  }
   return data;
 }

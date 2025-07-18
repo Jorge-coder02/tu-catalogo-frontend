@@ -3,6 +3,7 @@ export default function LabeledInput({
   label,
   type = "text",
   placeholder,
+  error,
   ...props
 }) {
   return (
@@ -14,9 +15,12 @@ export default function LabeledInput({
         id={id}
         type={type}
         placeholder={placeholder}
-        className="border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className={`${
+          error ? "ring-red-500 focus:ring-red-500" : "focus:ring-blue-500 "
+        } rounded-lg px-4 py-2 focus:outline-none focus:ring-2 ring-2 ring-gray-300 transition-colors duration-200`}
         {...props}
       />
+      {error && <p className="mt-1 text-sm text-red-600">{error}</p>}
     </div>
   );
 }
