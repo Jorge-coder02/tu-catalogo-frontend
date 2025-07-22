@@ -16,7 +16,7 @@ const variants = {
     }
   `,
   danger: css`
-    background-color: #dc2626;
+    background-color: #c35959;
     color: white;
     &:hover {
       background-color: #b91c1c;

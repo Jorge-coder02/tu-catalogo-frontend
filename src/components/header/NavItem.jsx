@@ -1,8 +1,14 @@
 import { Link } from "react-router-dom";
 
-function NavItem({ href, label }) {
+function NavItem({ href, label, setOpen }) {
   return (
-    <Link to={href} className="hover:text-blue-500 font-medium">
+    <Link
+      onClick={() => {
+        setOpen(false);
+      }}
+      to={href}
+      className="hover:text-blue-500 font-medium"
+    >
       {label}
     </Link>
   );

@@ -1,23 +1,21 @@
-/* eslint-disable no-unused-vars */
+import { useReducer, useState } from "react";
+import { useNavigate } from "react-router-dom";
+// Components
 import LabeledInput from "../components/ui/LabeledInput.";
 import Button from "../components/ui/Button.styles";
-import { useReducer, useState } from "react";
-import { login } from "../services/users";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
 // Redux auth
 import { useDispatch, useSelector } from "react-redux";
-import {
-  loginStart,
-  loginSuccess,
-  loginFailure,
-  logout,
-} from "../store/authSlice";
+import { loginStart, loginSuccess, loginFailure } from "../store/authSlice";
+// Services
+import { login } from "../services/users";
 
 export default function Login() {
-  const dispatch = useDispatch();
   const [response, setResponse] = useState(null);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  const { loading, error, user } = useSelector((state) => state.auth);
+  const { loading, error } = useSelector((state) => state.auth);
 
   const [state, formDispatch] = useReducer(
     (state, action) => {
@@ -50,7 +48,10 @@ export default function Login() {
           dispatch(
             loginSuccess({ user: data.user.username, token: data.token })
           );
-          console.log("Guardado: ", data.user.username);
+          // Redirigir a la página principal con react-router
+          setTimeout(() => {
+            navigate("/");
+          }, 2000);
         }
       })
       // ❌ Error backend
@@ -67,18 +68,6 @@ export default function Login() {
       {/* Contenedor principal */}
       <div className="flex flex-col items-center gap-4 w-full max-w-xl">
         <h1 className="text-2xl font-semibold">👨‍💼 Iniciar sesión</h1>
-        <input
-          className="bg-blue-500 text-white p-2 rounded-lg cursor-pointer"
-          type="button"
-          value="Cerrar sesión"
-          onClick={() => dispatch(logout())}
-        />
-        <input
-          className="bg-blue-500 text-white p-2 rounded-lg cursor-pointer"
-          type="button"
-          value="Mostrar user de redux"
-          onClick={() => console.log("Usuario de Redux:", user)}
-        />
         {/* Formulario */}
         <div
           className="bg-white flex flex-col items-center mt-4 w-full border-2 border-blue-400 py-14 px-6 rounded-lg shadow-lg

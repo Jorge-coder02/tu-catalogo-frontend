@@ -3,7 +3,6 @@ import { useEffect } from "react";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import { setTerm, setResults, setStatus } from "../store/searchSlice";
-import { logout } from "../store/authSlice";
 // Comps
 import MovieCard from "../components/ui/MovieCard";
 import Button from "../components/ui/Button.styles";
@@ -12,12 +11,6 @@ import LoadingSpinner from "../components/ui/LoadingSpinner";
 export default function Home() {
   const dispatch = useDispatch();
   const { term, results, status } = useSelector((state) => state.search);
-  const { user } = useSelector((state) => state.auth);
-
-  useEffect(() => {
-    // Si hay un término de búsqueda, lo establecemos en el estado
-    console.log("Usuario actual:", user);
-  }, []);
 
   const handleSearch = async (query) => {
     if (!query || query.trim() === "") {
@@ -38,8 +31,8 @@ export default function Home() {
     // eslint-disable-next-line
   }, []);
 
-  const handleLogout = () => {
-    dispatch(logout());
+  const handleInputChange = (e) => {
+    dispatch(setTerm(e.target.value));
   };
 
   return (
@@ -50,14 +43,7 @@ export default function Home() {
           Bienvenido a tu catálogo. Aquí podrás buscar y explorar tus películas
           y series favoritas.
         </p>
-        {user ? (
-          <>
-            <p>Sesión iniciada como: {user.username}</p>
-            <button onClick={handleLogout}>Cerrar sesión</button>
-          </>
-        ) : (
-          <p>No hay sesión iniciada</p>
-        )}
+
         <div className="flex flex-col justify-center gap-y-4 mt-8 w-full max-w-sm">
           <h2 className="text-center text-2xl font-bold leading-none">
             🔍 Búsqueda de películas
@@ -71,7 +57,8 @@ export default function Home() {
             className="border p-2 rounded"
             placeholder="Buscar películas..."
             type="text"
-            defaultValue={term}
+            value={term}
+            onChange={handleInputChange}
             onKeyDown={(e) => {
               if (e.key === "Enter") handleSearch(e.target.value);
             }}
