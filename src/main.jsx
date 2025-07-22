@@ -6,17 +6,13 @@ import { BrowserRouter } from "react-router-dom";
 // Estado global con Redux
 import { Provider } from "react-redux";
 import { store } from "./store/store.js";
-// Contexto de autenticación
-import { AuthProvider } from "./context/AuthContext"; // importa el provider
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
-      <AuthProvider>
-        <Provider store={store}>
-          <App />
-        </Provider>
-      </AuthProvider>
+      <Provider store={store}>
+        <App />
+      </Provider>
     </BrowserRouter>
   </React.StrictMode>
 );
