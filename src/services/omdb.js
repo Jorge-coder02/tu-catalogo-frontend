@@ -10,6 +10,9 @@ export async function searchMovies(query) {
 export async function getMovieById(imdbID) {
   const res = await fetch(`${BASE_URL}?apikey=${API_KEY}&i=${imdbID}`);
   const data = await res.json();
+  if (!res.ok) {
+    throw new Error(data.message || "Error al obtener la película");
+  }
   return data;
 }
 

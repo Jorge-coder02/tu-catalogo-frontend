@@ -1,9 +1,18 @@
+import { useNavigate } from "react-router-dom";
 import PosterImage from "./PosterImage";
 import StyledButton from "./Button.styles";
 
 export default function MovieCard({ movie }) {
+  const navigate = useNavigate();
+
+  const handleCardClick = () => {
+    navigate(`/movie/${movie.imdbID}`);
+  };
   return (
-    <div className="flex flex-col items-center border-2 border-blue-400 rounded-lg p-4 gap-3 w-full cursor-pointer">
+    <div
+      className="flex flex-col items-center border-2 border-blue-400 rounded-lg p-4 gap-3 w-full cursor-pointer"
+      onClick={handleCardClick}
+    >
       <PosterImage src={movie.Poster} alt={movie.Title} />
 
       <div className="min-h-24 text-center flex flex-col justify-center">

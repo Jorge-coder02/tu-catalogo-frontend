@@ -1,9 +1,11 @@
-- registro backend mongodb
-- hooks gestión estados
-- Registro en 1-click (rellenar datos)
+# ToDo
+
+- subir backend a producción
 - Filtro pelis/series (mostrar)
 - linkButton Component
-- spinner
 
 - backoffice
 - testing
+- hooks gestión estados \*
+- skeleton loading
+- post linkedn
