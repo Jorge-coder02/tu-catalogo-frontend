@@ -3,6 +3,7 @@ import LabeledInput from "../components/ui/LabeledInput.";
 import Button from "../components/ui/Button.styles";
 import { useReducer, useState } from "react";
 import { login } from "../services/users";
+import LoadingSpinner from "../components/ui/LoadingSpinner";
 
 export default function Login() {
   const [error, setError] = useState(null);
@@ -33,13 +34,17 @@ export default function Login() {
     setError(null);
     setLoading(true);
     login(state.email, state.password)
+      // ✅ Respuesta backend
       .then((data) => {
-        console.log("✅ Login response:", data);
-        setResponse(data);
-        // Aquí puedes redirigir, guardar token, etc.
+        setResponse(data.message);
+        // guardar token y usuario en localStorage
+        if (data.token) {
+          // loginContext(data.user, data.token); // actualizamos contexto y localStorage
+        }
       })
+      // ❌ Error backend
       .catch((error) => {
-        console.error("❌ Login error:", error.message);
+        console.log("Respuesta del backend:", error);
         setError(error.message); // Este mensaje ya viene del backend
       })
       .finally(() => {
@@ -88,6 +93,19 @@ export default function Login() {
             Iniciar sesión
           </Button>
           {error && <p className="text-red-600 text-[16px] mt-2">{error}</p>}
+          {response && (
+            <>
+              <p className="text-blue-600 font-semibold text-[16px] mt-2">
+                {response}
+              </p>
+              <p className="text-blue-600 text-sm mt-2">
+                Redirigiendo a la página principal...
+              </p>
+              <div className="w-14 h-14">
+                <LoadingSpinner delay={0} />
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>

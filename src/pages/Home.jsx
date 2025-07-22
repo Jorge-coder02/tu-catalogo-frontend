@@ -13,7 +13,10 @@ export default function Home() {
   const { term, results, status } = useSelector((state) => state.search);
 
   const handleSearch = async (query) => {
-    console.log("Realizando búsqueda para:", query);
+    if (!query || query.trim() === "") {
+      console.warn("Búsqueda vacía, no se realizará ninguna acción.");
+      return;
+    }
     dispatch(setTerm(query));
     dispatch(setStatus("loading"));
     const results = await searchMovies(query);
@@ -23,7 +26,6 @@ export default function Home() {
 
   useEffect(() => {
     if (term && results.length === 0) {
-      console.log("Rehaciendo búsqueda para:", term);
       handleSearch(term);
     }
     // eslint-disable-next-line
