@@ -42,7 +42,6 @@ export default function Login() {
       // ✅ Respuesta backend
       .then((data) => {
         setResponse(data.message);
-        console.log(data);
         // guardar token y usuario en localStorage
         if (data.token) {
           dispatch(

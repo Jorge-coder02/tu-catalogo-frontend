@@ -1,7 +1,6 @@
 # ToDo
 
 - funcionalidad botones de añadir
-- subir backend a producción
 - Filtro pelis/series (mostrar)
 - linkButton Component
 - bcrypt en backend para contraseñas
