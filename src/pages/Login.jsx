@@ -4,13 +4,22 @@ import Button from "../components/ui/Button.styles";
 import { useReducer, useState } from "react";
 import { login } from "../services/users";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
+// Redux auth
+import { useDispatch, useSelector } from "react-redux";
+import {
+  loginStart,
+  loginSuccess,
+  loginFailure,
+  logout,
+} from "../store/authSlice";
 
 export default function Login() {
-  const [error, setError] = useState(null);
+  const dispatch = useDispatch();
   const [response, setResponse] = useState(null);
-  const [loading, setLoading] = useState(false);
 
-  const [state, dispatch] = useReducer(
+  const { loading, error, user } = useSelector((state) => state.auth);
+
+  const [state, formDispatch] = useReducer(
     (state, action) => {
       switch (action.type) {
         case "SET_EMAIL":
@@ -27,28 +36,29 @@ export default function Login() {
   const handleLogin = async () => {
     // Validación simple
     if (!state.email || !state.password) {
-      setError("Por favor, completa todos los campos.");
       return;
     }
     // 🚀 Petición backend
-    setError(null);
-    setLoading(true);
+    dispatch(loginStart());
     login(state.email, state.password)
       // ✅ Respuesta backend
       .then((data) => {
         setResponse(data.message);
+        console.log(data);
         // guardar token y usuario en localStorage
         if (data.token) {
-          // loginContext(data.user, data.token); // actualizamos contexto y localStorage
+          dispatch(
+            loginSuccess({ user: data.user.username, token: data.token })
+          );
+          console.log("Guardado: ", data.user.username);
         }
       })
       // ❌ Error backend
       .catch((error) => {
-        console.log("Respuesta del backend:", error);
-        setError(error.message); // Este mensaje ya viene del backend
+        dispatch(loginFailure(error.message));
       })
       .finally(() => {
-        setLoading(false);
+        //
       });
   };
 
@@ -57,6 +67,18 @@ export default function Login() {
       {/* Contenedor principal */}
       <div className="flex flex-col items-center gap-4 w-full max-w-xl">
         <h1 className="text-2xl font-semibold">👨‍💼 Iniciar sesión</h1>
+        <input
+          className="bg-blue-500 text-white p-2 rounded-lg cursor-pointer"
+          type="button"
+          value="Cerrar sesión"
+          onClick={() => dispatch(logout())}
+        />
+        <input
+          className="bg-blue-500 text-white p-2 rounded-lg cursor-pointer"
+          type="button"
+          value="Mostrar user de redux"
+          onClick={() => console.log("Usuario de Redux:", user)}
+        />
         {/* Formulario */}
         <div
           className="bg-white flex flex-col items-center mt-4 w-full border-2 border-blue-400 py-14 px-6 rounded-lg shadow-lg
@@ -69,7 +91,7 @@ export default function Login() {
             placeholder="usuario@ejemplo.com"
             value={state.email}
             onChange={(e) =>
-              dispatch({ type: "SET_EMAIL", payload: e.target.value })
+              formDispatch({ type: "SET_EMAIL", payload: e.target.value })
             }
           />
           <LabeledInput
@@ -79,14 +101,13 @@ export default function Login() {
             placeholder="********"
             value={state.password}
             onChange={(e) =>
-              dispatch({ type: "SET_PASSWORD", payload: e.target.value })
+              formDispatch({ type: "SET_PASSWORD", payload: e.target.value })
             }
           />
           <Button
             variant="primary"
             disabled={loading} // pendiente
             onClick={() => {
-              setLoading(true);
               handleLogin();
             }}
           >
