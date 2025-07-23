@@ -1,8 +1,8 @@
 # ToDo
 
-- funcionalidad botones de añadir
+- Cambiar Header opción vistas si login
+- moviedetail mejorar
 - Filtro pelis/series (mostrar)
-- linkButton Component
 - bcrypt en backend para contraseñas
 
 - backoffice (gestión usuarios)

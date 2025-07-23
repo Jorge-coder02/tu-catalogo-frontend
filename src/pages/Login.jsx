@@ -4,11 +4,13 @@ import { useNavigate } from "react-router-dom";
 import LabeledInput from "../components/ui/LabeledInput.";
 import Button from "../components/ui/Button.styles";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
-// Redux auth
+// Redux store
 import { useDispatch, useSelector } from "react-redux";
 import { loginStart, loginSuccess, loginFailure } from "../store/authSlice";
+import { setVistas } from "../store/moviesSlice";
 // Services
 import { login } from "../services/users";
+import { getViews } from "../services/movies";
 
 export default function Login() {
   const [response, setResponse] = useState(null);
@@ -36,18 +38,27 @@ export default function Login() {
     if (!state.email || !state.password) {
       return;
     }
-    // 🚀 Petición backend
     dispatch(loginStart());
+    // 🚀 Petición backend
     login(state.email, state.password)
       // ✅ Respuesta backend
-      .then((data) => {
+      .then(async (data) => {
         setResponse(data.message);
-        // guardar token y usuario en localStorage
+        // guardar token y datos usuario en localStorage
         if (data.token) {
           dispatch(
             loginSuccess({ user: data.user.username, token: data.token })
           );
-          // Redirigir a la página principal con react-router
+
+          // ✅ Obtener las películas vistas y guardarlas en Redux
+          try {
+            const vistasData = await getViews(); // → hace fetch a /movies/vistas
+            dispatch(setVistas(vistasData.vistas));
+          } catch (error) {
+            console.error("Error al cargar películas vistas:", error);
+          }
+
+          // 🚀 Redirigir al home
           setTimeout(() => {
             navigate("/");
           }, 2000);
@@ -56,9 +67,6 @@ export default function Login() {
       // ❌ Error backend
       .catch((error) => {
         dispatch(loginFailure(error.message));
-      })
-      .finally(() => {
-        //
       });
   };
 
