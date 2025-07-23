@@ -1,6 +1,7 @@
 # ToDo
 
 - Cambiar Header opción vistas si login
+- Añadir opción de ver las vistas
 - moviedetail mejorar
 - Filtro pelis/series (mostrar)
 - bcrypt en backend para contraseñas

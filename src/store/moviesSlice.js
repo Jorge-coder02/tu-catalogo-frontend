@@ -16,11 +16,15 @@ const moviesSlice = createSlice({
         state.vistas.push(action.payload);
       }
     },
+    removeVista: (state, action) => {
+      state.vistas = state.vistas.filter((id) => id !== action.payload);
+    },
     clearVistas: (state) => {
       state.vistas = [];
     },
   },
 });
 
-export const { setVistas, addVista, clearVistas } = moviesSlice.actions;
+export const { setVistas, addVista, clearVistas, removeVista } =
+  moviesSlice.actions;
 export default moviesSlice.reducer;
