@@ -3,8 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { getMovieById } from "../services/omdb";
-import { getViews, addToViews, removeFromViews } from "../services/movies";
-import { setVistas, removeVista } from "../store/moviesSlice";
+import { getViews } from "../services/movies";
+import { setVistas } from "../store/moviesSlice";
 
 import MovieCard from "../components/ui/MovieCard";
 
@@ -17,9 +17,10 @@ function UserDashboard() {
   const { user } = useSelector((state) => state.auth);
   const vistas = useSelector((state) => state.movies.vistas);
 
+  // Validar logueo existente
   useEffect(() => {
     if (!user) {
-      navigate("/login"); // o la ruta que uses
+      navigate("/login");
     }
   }, [user, navigate]);
 

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-function NavItem({ href, label, setOpen }) {
+function NavItem({ href, label, setOpen, children }) {
   return (
     <Link
       onClick={() => {
@@ -9,7 +9,7 @@ function NavItem({ href, label, setOpen }) {
       to={href}
       className="hover:text-blue-500 font-medium"
     >
-      {label}
+      {label ? label : children}
     </Link>
   );
 }

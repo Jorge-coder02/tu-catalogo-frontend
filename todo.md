@@ -1,11 +1,11 @@
 # ToDo
 
-- Cambiar Header opción vistas si login
-- Añadir opción de ver las vistas
-- moviedetail mejorar
+- móvil
 - Filtro pelis/series (mostrar)
 - bcrypt en backend para contraseñas
 
+- diseño oscuro (tono morado)
+- diseño tarjetas más pequeñas y con los botones dentro
 - backoffice (gestión usuarios)
 - testing
 - hooks gestión estados \*

@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../store/authSlice";
 
+import UserDropdown from "./UserDropdown"; // Dropdown profile menu
+
 function Navbar() {
   // Redux
   const dispatch = useDispatch();
@@ -25,17 +27,15 @@ function Navbar() {
         </div>
         <nav className="flex items-center justify-center space-x-8 p-4 text-gray-700">
           <NavItem href="/" label="Inicio" />
-          <NavItem href="/dashboard" label="Dashboard" />
-          <NavItem href="/search" label="Buscar" />
+          <NavItem href="/search" label="Explorar" />
+          {user && <NavItem href="/dashboard" label="Mi lista" />}
         </nav>
         <div className="flex items-center justify-center space-x-4 p-4">
           {user ? (
-            <>
-              <span className="text-gray-800 text-sm">{user}</span>
-              <Button variant="danger" onClick={() => handleLogout()}>
-                Cerrar sesión
-              </Button>
-            </>
+            <UserDropdown
+              user={user}
+              handleLogout={handleLogout}
+            ></UserDropdown>
           ) : (
             <>
               <Link to="/login">
