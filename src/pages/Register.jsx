@@ -63,11 +63,9 @@ export default function Register() {
     setLoading(true);
     register(state.email, state.password, state.username)
       .then((data) => {
-        setResponse(data); // token, user info, etc.
-        // Guardar token...
-        // Redirigir después de 3.5 segundos
+        setResponse(data);
         setTimeout(() => {
-          navigate("/");
+          navigate("/login"); // Redirigir después de 3.5 segundos
         }, 3500);
       })
       .catch((error) => {
@@ -157,8 +155,7 @@ export default function Register() {
                 {response.message || "Bienvenido!"}
               </p>
               <div className="text-center text-blue-600 text-[16px] font-semibold">
-                <p>{"Sesión iniciada automáticamente."}</p>
-                <p>{"Redirigiendo..."}</p>
+                <p>{"Redirigiendo a login..."}</p>
               </div>
               {
                 <div className="w-14 h-14">

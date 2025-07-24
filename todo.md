@@ -1,6 +1,5 @@
 # ToDo
 
-- móvil
 - Filtro pelis/series (mostrar)
 - bcrypt en backend para contraseñas
 
