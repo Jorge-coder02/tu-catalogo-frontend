@@ -10,12 +10,6 @@ export default function MovieDetail() {
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
 
-  // Validar logueo existente
-  useEffect(() => {
-    if (!user) {
-      navigate("/login");
-    }
-  }, [user, navigate]);
   useEffect(() => {
     const fetchAll = async () => {
       try {
