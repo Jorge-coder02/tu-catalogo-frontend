@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+// import { useDispatch, useSelector } from "react-redux";
 import { getMovieById, fetchTMDBMovieById } from "../services/omdb";
 
-import { addToViews, removeFromViews } from "../services/movies.js";
-import { setVistas, removeVista } from "../store/moviesSlice.js";
+// import { addToViews, removeFromViews } from "../services/movies.js";
+// import { setVistas, removeVista } from "../store/moviesSlice.js";
 
 import StyledButton from "../components/ui/Button.styles.jsx";
 
@@ -15,12 +15,12 @@ export default function MovieDetail() {
   const navigate = useNavigate();
 
   // Estado
-  const dispatch = useDispatch();
-  const { user, vistas } = useSelector((state) => state.auth); // recojo valores de user
-  let isVista = "";
-  if (vistas) {
-    isVista = vistas.includes(movie.imdbID);
-  }
+  // const dispatch = useDispatch();
+  // const { user, vistas } = useSelector((state) => state.auth); // recojo valores de user
+  // let isVista = "";
+  // if (vistas) {
+  //   isVista = vistas.includes(movie.imdbID);
+  // }
 
   // 🚀🎬 Fetch movie data
   useEffect(() => {
@@ -43,39 +43,39 @@ export default function MovieDetail() {
     fetchAll();
   }, [id]);
 
-  const handleAddToViews = (imdbID) => {
-    // 🚨 Verifica si el usuario está autenticado
-    if (!user) {
-      alert("Por favor, inicia sesión para añadir a vistas.");
-      // *aquí abrir modal de inicio de sesión*
-      return;
-    }
-    // 🛠 Manejar si se pulsa Añadir o Quitar de vistas
-    // ✅ Añadir a vistas
-    if (!isVista) {
-      addToViews(imdbID)
-        .then((response) => {
-          if (response.alreadyAdded) {
-            console.warn("La película ya estaba en vistas.");
-          } else {
-            dispatch(setVistas(response.vistas)); // 🔥 ACTUALIZA REDUX
-          }
-        })
-        .catch((error) => {
-          console.error("Error al añadir película a vistas:", error);
-        });
-    }
-    // ❌ Quitar de vistas
-    else {
-      removeFromViews(imdbID)
-        .then(() => {
-          dispatch(removeVista(imdbID)); // 🔥 ACTUALIZA REDUX
-        })
-        .catch((error) => {
-          console.error("Error al quitar película de vistas:", error);
-        });
-    }
-  };
+  // const handleAddToViews = (imdbID) => {
+  //   // 🚨 Verifica si el usuario está autenticado
+  //   if (!user) {
+  //     alert("Por favor, inicia sesión para añadir a vistas.");
+  //     // *aquí abrir modal de inicio de sesión*
+  //     return;
+  //   }
+  //   // 🛠 Manejar si se pulsa Añadir o Quitar de vistas
+  //   // ✅ Añadir a vistas
+  //   if (!isVista) {
+  //     addToViews(imdbID)
+  //       .then((response) => {
+  //         if (response.alreadyAdded) {
+  //           console.warn("La película ya estaba en vistas.");
+  //         } else {
+  //           dispatch(setVistas(response.vistas)); // 🔥 ACTUALIZA REDUX
+  //         }
+  //       })
+  //       .catch((error) => {
+  //         console.error("Error al añadir película a vistas:", error);
+  //       });
+  //   }
+  //   // ❌ Quitar de vistas
+  //   else {
+  //     removeFromViews(imdbID)
+  //       .then(() => {
+  //         dispatch(removeVista(imdbID)); // 🔥 ACTUALIZA REDUX
+  //       })
+  //       .catch((error) => {
+  //         console.error("Error al quitar película de vistas:", error);
+  //       });
+  //   }
+  // };
 
   if (!movie) return <div>Cargando...</div>; // * añadir LoadingSpinner *
 
