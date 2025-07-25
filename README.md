@@ -1,6 +1,6 @@
 # ⚙🎬 Tu Catálogo (Hub personalizable de pelis y series)
 
-[![Tu Catálogo](https://img.shields.io/badge/Status-In-progress-yellow)](https://github.com/Jorge-coder02/tu-catalogo-frontend)
+[![Tu Catálogo](https://img.shields.io/badge/Status-In_Progress-yellow)](https://github.com/Jorge-coder02/tu-catalogo-frontend)
 [![Licencia](https://img.shields.io/badge/License-MIT-blue)](LICENSE)
 
 🔗 **Visitar:** [Ver en vivo](https://tucatalogohup.up.railway.app/)
