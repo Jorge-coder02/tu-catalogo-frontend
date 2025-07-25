@@ -1,6 +1,6 @@
 # ToDo
 
-- recoger pendientes al iniciar sesión (como vistas), también hacer getPendientes para mostrar en mi lista
+- ordenar componentes como moviecard, userdashboard, moviedetail... para usar hooks y limpiar UI
 - Filtro pelis/series (mostrar)
 - bcrypt en backend para contraseñas
 
