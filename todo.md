@@ -1,5 +1,6 @@
 # ToDo
 
+- recoger pendientes al iniciar sesión (como vistas), también hacer getPendientes para mostrar en mi lista
 - Filtro pelis/series (mostrar)
 - bcrypt en backend para contraseñas
 

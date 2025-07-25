@@ -21,9 +21,7 @@ function Navbar() {
     <>
       <header className="hidden justify-evenly bg-white shadow md:flex">
         <div className="flex justify-center items-center p-4">
-          <h1 className="text-center text-2xl font-bold text-gray-800">
-            Tu Catálogo
-          </h1>
+          <NavItem className={"text-xl"} href="/" label="Tu Catálogo" />
         </div>
         <nav className="flex items-center justify-center space-x-8 p-4 text-gray-700">
           <NavItem href="/" label="Inicio" />

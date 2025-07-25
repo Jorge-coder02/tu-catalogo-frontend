@@ -3,19 +3,20 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
 import { getMovieById } from "../services/omdb";
-import { getViews } from "../services/movies";
-import { setVistas } from "../store/moviesSlice";
+import { getViews, getPendings } from "../services/movies";
+import { setVistas, setPendientes } from "../store/moviesSlice"; // * *
 
 import MovieCard from "../components/ui/MovieCard";
 
 function UserDashboard() {
   const navigate = useNavigate();
 
-  const [moviesDetails, setMoviesDetails] = useState([]);
+  const [viewedMovies, setViewedMovies] = useState([]);
+  const [watchlistMovies, setWatchlistMovies] = useState([]);
   // Redux
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
-  const vistas = useSelector((state) => state.movies.vistas);
+  const { vistas, pendientes } = useSelector((state) => state.movies);
 
   // Validar logueo existente
   useEffect(() => {
@@ -24,8 +25,9 @@ function UserDashboard() {
     }
   }, [user, navigate]);
 
-  // Cargar vistas del usuario desde bbdd
+  // 👀 Cargar vistas del usuario desde bbdd
   useEffect(() => {
+    // 🎬👀
     if (user && vistas.length === 0) {
       getViews()
         .then((data) => {
@@ -35,25 +37,55 @@ function UserDashboard() {
           console.error("Error cargando vistas:", err);
         });
     }
+    // 🎬🕐
+    if (user && pendientes.length === 0) {
+      getPendings()
+        .then((data) => {
+          dispatch(setPendientes(data.pendientes));
+        })
+        .catch((err) => {
+          console.error("Error cargando vistas:", err);
+        });
+    }
   }, [user, dispatch]);
 
-  // Obtener detalles de las películas vistas
+  // 🕐 Cargar pendientes del usuario desde bbdd
   useEffect(() => {
-    async function fetchMoviesDetails() {
+    async function fetchPendingMoviesDetails() {
+      try {
+        const movies = await Promise.all(
+          pendientes.map((imdbID) => getMovieById(imdbID))
+        );
+        setWatchlistMovies(movies);
+      } catch (error) {
+        console.error("Error fetching movie details:", error);
+      }
+    }
+
+    if (pendientes.length > 0) {
+      fetchPendingMoviesDetails();
+    } else {
+      setWatchlistMovies([]); // limpio si no hay vistas
+    }
+  }, [pendientes]);
+
+  // 👀 Obtener detalles de las películas vistas
+  useEffect(() => {
+    async function fetchViewedMoviesDetails() {
       try {
         const movies = await Promise.all(
           vistas.map((imdbID) => getMovieById(imdbID))
         );
-        setMoviesDetails(movies);
+        setViewedMovies(movies);
       } catch (error) {
         console.error("Error fetching movie details:", error);
       }
     }
 
     if (vistas.length > 0) {
-      fetchMoviesDetails();
+      fetchViewedMoviesDetails();
     } else {
-      setMoviesDetails([]); // limpio si no hay vistas
+      setViewedMovies([]); // limpio si no hay vistas
     }
   }, [vistas]);
 
@@ -68,7 +100,7 @@ function UserDashboard() {
           <h2 className="text-xl font-bold mb-2">Tus Vistas</h2>
           {/* Mostrar las películas que el usuario ha visto */}
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {moviesDetails.map((movie) => (
+            {viewedMovies.map((movie) => (
               <MovieCard
                 key={movie.imdbID}
                 movie={movie} // Aquí deberías pasar el objeto completo de la película
@@ -78,6 +110,11 @@ function UserDashboard() {
           <div className="mt-8">
             <h2 className="text-xl font-bold mb-2">Tus Pendientes</h2>
             {/* Mostrar las películas que el usuario tiene en pendientes */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {watchlistMovies.map((movie) => (
+                <MovieCard key={movie.imdbID} movie={movie} />
+              ))}
+            </div>
           </div>
         </div>
       </div>

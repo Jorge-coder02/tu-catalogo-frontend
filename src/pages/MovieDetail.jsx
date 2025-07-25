@@ -48,8 +48,9 @@ export default function MovieDetail() {
             infoMovie && infoMovie.backdrop_path
               ? `url(https://image.tmdb.org/t/p/original${infoMovie.backdrop_path})`
               : `url(/img/imgnotfound.jpg)`,
+          // backgroundAttachment: "fixed",
+          backgroundPosition: "center ",
           backgroundSize: "cover",
-          backgroundPosition: "center",
           boxShadow: "inset 0 -100px 80px -20px rgba(0, 0, 0, 0.7)",
         }}
       >

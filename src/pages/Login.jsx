@@ -7,10 +7,10 @@ import LoadingSpinner from "../components/ui/LoadingSpinner";
 // Redux store
 import { useDispatch, useSelector } from "react-redux";
 import { loginStart, loginSuccess, loginFailure } from "../store/authSlice";
-import { setVistas } from "../store/moviesSlice";
+import { setVistas, setPendientes } from "../store/moviesSlice";
 // Services
 import { login } from "../services/users";
-import { getViews } from "../services/movies";
+import { getPendings, getViews } from "../services/movies";
 
 export default function Login() {
   const [response, setResponse] = useState(null);
@@ -50,10 +50,13 @@ export default function Login() {
             loginSuccess({ user: data.user.username, token: data.token })
           );
 
-          // ✅ Obtener las películas vistas y guardarlas en Redux
+          // ✅ Obtener las películas vistas-pendientes y guardarlas en Redux
           try {
-            const vistasData = await getViews(); // → hace fetch a /movies/vistas
+            const vistasData = await getViews(); // → hace fetch a /movies/vistas *vistasData y pendientesData cambiar mejor por userData
             dispatch(setVistas(vistasData.vistas));
+
+            const pendientesData = await getPendings(); // → hace fetch a /movies/pendientes
+            dispatch(setPendientes(pendientesData.pendientes));
           } catch (error) {
             console.error("Error al cargar películas vistas:", error);
           }

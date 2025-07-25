@@ -2,21 +2,72 @@ import { useNavigate } from "react-router-dom";
 import PosterImage from "./PosterImage";
 import StyledButton from "./Button.styles";
 import { useDispatch, useSelector } from "react-redux";
-import { addToViews, removeFromViews } from "../../services/movies.js";
-import { setVistas, removeVista } from "../../store/moviesSlice.js";
+import {
+  addToViews,
+  removeFromViews,
+  addToWatchlist,
+  removeFromWatchlist,
+} from "../../services/movies.js";
+import {
+  setVistas,
+  removeVista,
+  setPendientes,
+  removePendiente,
+} from "../../store/moviesSlice.js";
 
 export default function MovieCard({ movie }) {
   const dispatch = useDispatch();
-  const vistas = useSelector((state) => state.movies.vistas);
-  const isVista = vistas.includes(movie.imdbID);
-
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.auth);
+  const { vistas, pendientes } = useSelector((state) => state.movies);
+
+  // Película vista 👀❔
+  const isVista = vistas?.includes(movie.imdbID) || false;
+
+  // Película pendiente 🕐❔
+  const isPendiente = pendientes?.includes(movie.imdbID) || false;
 
   const handleCardClick = () => {
     navigate(`/movie/${movie.imdbID}`);
   };
 
+  // 🎬🕐
+  const handleAddToWatchlist = (imdbID) => {
+    // 🚨 Verifica si el usuario está autenticado
+    if (!user) {
+      alert("Por favor, inicia sesión gestionar las películas pendientes.");
+      // *aquí abrir modal de inicio de sesión*
+      return;
+    }
+    // 🛠 Manejar si se pulsa Añadir o Quitar de pendientes
+    // ✅ Añadir a pendientes
+    if (!isPendiente) {
+      addToWatchlist(imdbID)
+        .then((response) => {
+          if (response.alreadyAdded) {
+            console.warn("La película ya estaba en pendientes.");
+          } else {
+            dispatch(setPendientes(response.pendientes)); // 🔥 ACTUALIZA REDUX
+            console.log("Pendientes actualizados:", pendientes);
+          }
+        })
+        .catch((error) => {
+          console.error("Error al añadir película a pendientes:", error);
+        });
+    }
+    // ❌ Quitar de pendientes
+    else {
+      removeFromWatchlist(imdbID)
+        .then(() => {
+          dispatch(removePendiente(imdbID)); // 🔥 ACTUALIZA REDUX
+        })
+        .catch((error) => {
+          console.error("Error al quitar película de pendientes:", error);
+        });
+    }
+  };
+
+  // 🎬👀
   const handleAddToViews = (imdbID) => {
     // 🚨 Verifica si el usuario está autenticado
     if (!user) {
@@ -33,6 +84,7 @@ export default function MovieCard({ movie }) {
             console.warn("La película ya estaba en vistas.");
           } else {
             dispatch(setVistas(response.vistas)); // 🔥 ACTUALIZA REDUX
+            console.log("Vistas actualizadas:", vistas);
           }
         })
         .catch((error) => {
@@ -49,17 +101,6 @@ export default function MovieCard({ movie }) {
           console.error("Error al quitar película de vistas:", error);
         });
     }
-  };
-
-  const handleAddToWatchlist = (movie) => {
-    if (!user) {
-      alert(
-        "Por favor, inicia sesión para gestionar las películas pendientes."
-      );
-      return;
-    }
-    // Aquí puedes implementar la lógica para añadir a pendientes
-    console.log("Añadido a pendientes:", movie);
   };
 
   return (
@@ -90,10 +131,10 @@ export default function MovieCard({ movie }) {
             {isVista ? "Quitar de vistas" : "Añadir a vistas"}
           </StyledButton>
           <StyledButton
-            variant="secondary"
-            onClick={() => handleAddToWatchlist(movie)}
+            variant={`${isPendiente ? "secondary" : "primary"}`}
+            onClick={() => handleAddToWatchlist(movie.imdbID)}
           >
-            Añadir a pendientes
+            {isPendiente ? "Quitar de pendientes" : "Añadir a pendientes"}
           </StyledButton>
         </div>
       </div>
