@@ -54,8 +54,8 @@ export default function Home() {
             </span>
           </h2>
           <input
-            className="border p-2 rounded"
-            placeholder="Buscar películas..."
+            className="border px-4 py-2 rounded"
+            placeholder="Inception..."
             type="text"
             value={term}
             onChange={handleInputChange}

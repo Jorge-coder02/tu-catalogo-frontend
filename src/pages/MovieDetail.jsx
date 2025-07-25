@@ -1,26 +1,17 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-// import { useDispatch, useSelector } from "react-redux";
-import { getMovieById, fetchTMDBMovieById } from "../services/omdb";
+import { getMovieById, fetchTMDBMovieById, getTrailer } from "../services/omdb";
 
-// import { addToViews, removeFromViews } from "../services/movies.js";
-// import { setVistas, removeVista } from "../store/moviesSlice.js";
-
-import StyledButton from "../components/ui/Button.styles.jsx";
+import MovieCard from "../components/ui/MovieCard.jsx";
+import Button from "../components/ui/Button.styles.jsx";
 
 export default function MovieDetail() {
-  const { id } = useParams(); // este es el imdbID
-  const [movie, setMovie] = useState(null);
-  const [infoMovie, setInfoMovie] = useState(null);
   const navigate = useNavigate();
-
+  const { id } = useParams(); // imdbID de la película
   // Estado
-  // const dispatch = useDispatch();
-  // const { user, vistas } = useSelector((state) => state.auth); // recojo valores de user
-  // let isVista = "";
-  // if (vistas) {
-  //   isVista = vistas.includes(movie.imdbID);
-  // }
+  const [movie, setMovie] = useState(null);
+  const [infoMovie, setInfoMovie] = useState(null); // info detallada tmdb (obtengo imágen backdrop)
+  const [movieTrailer, setMovieTrailer] = useState(null);
 
   // 🚀🎬 Fetch movie data
   useEffect(() => {
@@ -34,6 +25,9 @@ export default function MovieDetail() {
         if (movieData) {
           const tmdbData = await fetchTMDBMovieById(id);
           setInfoMovie(tmdbData);
+          getTrailer(id).then((trailerUrl) => {
+            setMovieTrailer(trailerUrl);
+          });
         }
       } catch (error) {
         console.error("Error al obtener la película:", error);
@@ -42,40 +36,6 @@ export default function MovieDetail() {
 
     fetchAll();
   }, [id]);
-
-  // const handleAddToViews = (imdbID) => {
-  //   // 🚨 Verifica si el usuario está autenticado
-  //   if (!user) {
-  //     alert("Por favor, inicia sesión para añadir a vistas.");
-  //     // *aquí abrir modal de inicio de sesión*
-  //     return;
-  //   }
-  //   // 🛠 Manejar si se pulsa Añadir o Quitar de vistas
-  //   // ✅ Añadir a vistas
-  //   if (!isVista) {
-  //     addToViews(imdbID)
-  //       .then((response) => {
-  //         if (response.alreadyAdded) {
-  //           console.warn("La película ya estaba en vistas.");
-  //         } else {
-  //           dispatch(setVistas(response.vistas)); // 🔥 ACTUALIZA REDUX
-  //         }
-  //       })
-  //       .catch((error) => {
-  //         console.error("Error al añadir película a vistas:", error);
-  //       });
-  //   }
-  //   // ❌ Quitar de vistas
-  //   else {
-  //     removeFromViews(imdbID)
-  //       .then(() => {
-  //         dispatch(removeVista(imdbID)); // 🔥 ACTUALIZA REDUX
-  //       })
-  //       .catch((error) => {
-  //         console.error("Error al quitar película de vistas:", error);
-  //       });
-  //   }
-  // };
 
   if (!movie) return <div>Cargando...</div>; // * añadir LoadingSpinner *
 
@@ -105,10 +65,11 @@ export default function MovieDetail() {
       <div className="p-12 md:pt-8 md:pb-20 gap-y-8 mt-10 flex md:flex-row flex-col gap-x-12 items-center justify-center">
         {/* Imagen película */}
         <div className="flex flex-col items-center justify-center">
-          <img src={movie.Poster} alt={movie.Title} className="w-60 mb-4" />
+          <MovieCard movie={movie}></MovieCard>
+          {/* <img src={movie.Poster} alt={movie.Title} className="w-60 mb-4" /> */}
         </div>
         {/* Contenido película */}
-        <div className="flex flex-col gap-y-10 max-w-md">
+        <div className="flex flex-col gap-y-10 max-w-md pb-16">
           <div>
             <h1 className="text-2xl font-bold mb-2">
               {movie.Title} ({movie.Year})
@@ -131,12 +92,15 @@ export default function MovieDetail() {
             <strong>Sinopsis:</strong>{" "}
             <span className="font-semibold">{movie.Plot}</span>
           </div>
-          {/* <StyledButton
-            variant={`${isVista ? "secondary" : "primary"}`}
-            onClick={() => handleAddToViews(movie.imdbID)}
-          >
-            {isVista ? "Quitar de vistas" : "Añadir a vistas"}
-          </StyledButton> */}
+          <div className="flex items-center justify-center">
+            <Button
+              className={"w-1/3"}
+              onClick={() => window.open(`${movieTrailer}`, "_blank")}
+              variant="danger"
+            >
+              Ver tráiler
+            </Button>
+          </div>
         </div>
       </div>
     </div>

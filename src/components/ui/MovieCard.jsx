@@ -20,7 +20,7 @@ export default function MovieCard({ movie }) {
   const handleAddToViews = (imdbID) => {
     // 🚨 Verifica si el usuario está autenticado
     if (!user) {
-      alert("Por favor, inicia sesión para añadir a vistas.");
+      alert("Por favor, inicia sesión gestionar las películas vistas.");
       // *aquí abrir modal de inicio de sesión*
       return;
     }
@@ -53,7 +53,9 @@ export default function MovieCard({ movie }) {
 
   const handleAddToWatchlist = (movie) => {
     if (!user) {
-      alert("Por favor, inicia sesión para añadir a pendientes.");
+      alert(
+        "Por favor, inicia sesión para gestionar las películas pendientes."
+      );
       return;
     }
     // Aquí puedes implementar la lógica para añadir a pendientes
@@ -61,7 +63,7 @@ export default function MovieCard({ movie }) {
   };
 
   return (
-    <div className="flex flex-col items-center border-2 border-blue-400 rounded-lg p-4 gap-3 w-full">
+    <div className="flex flex-col items-center border- border-blue-400 rounded-lg p-4 gap-3 w-full">
       <PosterImage
         onClick={handleCardClick}
         src={movie.Poster}
