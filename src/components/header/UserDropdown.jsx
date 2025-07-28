@@ -26,12 +26,6 @@ const UserDropdown = ({ user, handleLogout }) => {
           Perfil
         </DropdownMenu.Item>
         <DropdownMenu.Item
-          className="px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 cursor-pointer rounded"
-          onSelect={() => navigate("/configuracion")}
-        >
-          Configuración
-        </DropdownMenu.Item>
-        <DropdownMenu.Item
           className="px-3 py-2 text-sm text-red-600 hover:bg-red-100 cursor-pointer rounded"
           onSelect={handleLogout}
         >

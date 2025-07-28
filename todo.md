@@ -1,10 +1,9 @@
 # ToDo
 
-- Filtro pelis/series (mostrar)
 - bcrypt en backend para contraseñas
 
 - diseño oscuro (tono morado)
-- diseño tarjetas más pequeñas y con los botones dentro
+- diseño tarjetas más pequeñas y con los botones dentro (sólo PC)
 - backoffice (gestión usuarios)
 - testing (ci/cd)
 - hooks gestión estados \*

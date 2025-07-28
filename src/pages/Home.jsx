@@ -7,6 +7,7 @@ import { setTerm, setResults, setStatus } from "../store/searchSlice";
 import MovieCard from "../components/ui/MovieCard";
 import Button from "../components/ui/Button.styles";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
+import CategoryButton from "../components/ui/CategoryButton";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -71,35 +72,26 @@ export default function Home() {
         {/* 📋 Resultados de la búsqueda */}
         {status === "succeeded" && (
           <div className="mt-12">
-            <div className="flex items-center gap-x-8">
+            <div className="flex md:flex-row flex-col space-y-2 items-center gap-x-8">
               <h2 className="text-2xl font-bold">🎬 Resultados de búsqueda</h2>
               {/* Pelis/Series */}
               <div className="flex items-center gap-x-4 border px-4 py-2">
-                <input
-                  className={`cursor-pointer ${
-                    selectedCategory === "movies" && "font-bold"
-                  }`}
-                  type="button"
+                <CategoryButton
                   value="Películas"
-                  onClick={() => setSelectedCategory("movies")}
+                  selectedCategory={selectedCategory}
+                  onClick={setSelectedCategory}
                 />
                 <span className="text-gray-400">|</span>
-                <input
-                  className={`cursor-pointer ${
-                    selectedCategory === "series" && "font-bold"
-                  }`}
-                  type="button"
+                <CategoryButton
                   value="Series"
-                  onClick={() => setSelectedCategory("series")}
+                  selectedCategory={selectedCategory}
+                  onClick={setSelectedCategory}
                 />
                 <span className="text-gray-400">|</span>
-                <input
-                  className={`cursor-pointer ${
-                    selectedCategory === "all" && "font-bold"
-                  }`}
-                  type="button"
+                <CategoryButton
                   value="Todos"
-                  onClick={() => setSelectedCategory("all")}
+                  selectedCategory={selectedCategory}
+                  onClick={setSelectedCategory}
                 />
               </div>
             </div>

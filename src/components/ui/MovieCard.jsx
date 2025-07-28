@@ -18,7 +18,7 @@ export default function MovieCard({ movie }) {
         onClick={handleCardClick}
         src={movie.Poster}
         alt={movie.Title}
-        className="cursor-pointer"
+        className="cursor-pointer hover:opacity-90 transition-all ease-in-out "
       />
 
       <div className="min-h-24 text-center flex flex-col justify-center max-w-full">
