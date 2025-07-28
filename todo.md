@@ -1,6 +1,5 @@
 # ToDo
 
-- ordenar componentes como moviecard, userdashboard, moviedetail... para usar hooks y limpiar UI
 - Filtro pelis/series (mostrar)
 - bcrypt en backend para contraseñas
 
@@ -10,4 +9,3 @@
 - testing
 - hooks gestión estados \*
 - skeleton loading
-- post linkedn
