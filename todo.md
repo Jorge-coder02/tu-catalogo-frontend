@@ -6,6 +6,6 @@
 - diseño oscuro (tono morado)
 - diseño tarjetas más pequeñas y con los botones dentro
 - backoffice (gestión usuarios)
-- testing
+- testing (ci/cd)
 - hooks gestión estados \*
 - skeleton loading

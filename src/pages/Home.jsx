@@ -1,5 +1,5 @@
 import { searchMovies } from "../services/omdb";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 // Redux
 import { useDispatch, useSelector } from "react-redux";
 import { setTerm, setResults, setStatus } from "../store/searchSlice";
@@ -11,6 +11,7 @@ import LoadingSpinner from "../components/ui/LoadingSpinner";
 export default function Home() {
   const dispatch = useDispatch();
   const { term, results, status } = useSelector((state) => state.search);
+  const [selectedCategory, setSelectedCategory] = useState("all");
 
   const handleSearch = async (query) => {
     if (!query || query.trim() === "") {
@@ -70,11 +71,51 @@ export default function Home() {
         {/* 📋 Resultados de la búsqueda */}
         {status === "succeeded" && (
           <div className="mt-12">
-            <h2 className="text-2xl font-bold">🎬 Resultados de búsqueda</h2>
-            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-4">
-              {results.map((movie) => (
-                <MovieCard key={movie.imdbID} movie={movie} />
-              ))}
+            <div className="flex items-center gap-x-8">
+              <h2 className="text-2xl font-bold">🎬 Resultados de búsqueda</h2>
+              {/* Pelis/Series */}
+              <div className="flex items-center gap-x-4 border px-4 py-2">
+                <input
+                  className={`cursor-pointer ${
+                    selectedCategory === "movies" && "font-bold"
+                  }`}
+                  type="button"
+                  value="Películas"
+                  onClick={() => setSelectedCategory("movies")}
+                />
+                <span className="text-gray-400">|</span>
+                <input
+                  className={`cursor-pointer ${
+                    selectedCategory === "series" && "font-bold"
+                  }`}
+                  type="button"
+                  value="Series"
+                  onClick={() => setSelectedCategory("series")}
+                />
+                <span className="text-gray-400">|</span>
+                <input
+                  className={`cursor-pointer ${
+                    selectedCategory === "all" && "font-bold"
+                  }`}
+                  type="button"
+                  value="Todos"
+                  onClick={() => setSelectedCategory("all")}
+                />
+              </div>
+            </div>
+            <div className="mt-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4">
+              {results
+                .filter((movie) => {
+                  if (selectedCategory === "all") return true;
+                  if (selectedCategory === "movies")
+                    return movie.Type === "movie";
+                  if (selectedCategory === "series")
+                    return movie.Type === "series";
+                  return true; // fallback
+                })
+                .map((movie) => (
+                  <MovieCard key={movie.imdbID} movie={movie} />
+                ))}
             </div>
           </div>
         )}

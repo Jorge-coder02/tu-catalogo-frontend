@@ -21,10 +21,11 @@ export default function MovieCard({ movie }) {
         className="cursor-pointer"
       />
 
-      <div className="min-h-24 text-center flex flex-col justify-center">
+      <div className="min-h-24 text-center flex flex-col justify-center max-w-full">
         <h3
           onClick={handleCardClick}
-          className="font-bold text-md line-clamp-2 cursor-pointer hover:underline"
+          title={movie.Title}
+          className="font-bold text-md line-clamp-2 cursor-pointer hover:underline truncate "
         >
           {movie.Title} <span>({movie.Year})</span>
         </h3>

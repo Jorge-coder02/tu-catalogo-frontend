@@ -12,17 +12,24 @@ function UserDashboard() {
           Aquí puedes gestionar tus vistas y pendientes.
         </p>
 
-        <div className="mt-8">
-          <h2 className="text-xl font-bold mb-2">Tus Vistas</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            {viewedMovies.map((movie) => (
-              <MovieCard key={movie.imdbID} movie={movie} />
-            ))}
+        {/* Componente principal */}
+        <div className="flex flex-col gap-y-20 mt-16">
+          {/* 👀 Vistas */}
+          <div className="space-y-8">
+            <h2 className="text-2xl text-center font-bold mb-2">Tus Vistas</h2>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4">
+              {viewedMovies.map((movie) => (
+                <MovieCard key={movie.imdbID} movie={movie} />
+              ))}
+            </div>
           </div>
 
-          <div className="mt-8">
-            <h2 className="text-xl font-bold mb-2">Tus Pendientes</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {/* 🕐 Pendientes */}
+          <div className="space-y-8">
+            <h2 className="text-2xl text-center font-bold mb-2">
+              Tus Pendientes
+            </h2>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4">
               {watchlistMovies.map((movie) => (
                 <MovieCard key={movie.imdbID} movie={movie} />
               ))}
