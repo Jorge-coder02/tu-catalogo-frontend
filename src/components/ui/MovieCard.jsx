@@ -11,12 +11,13 @@ export default function MovieCard({ movie }) {
 
   return (
     <div className="flex flex-col items-center rounded-lg p-4 gap-3 w-full">
-      <div className="relative w-full">
+      {/* Imagen + botones */}
+      <div className="relative w-full max-w-[200px] aspect-[2/3] overflow-hidden rounded-md">
         <PosterImage
           onClick={handleCardClick}
           src={movie.Poster}
           alt={movie.Title}
-          className="cursor-pointer hover:opacity-90 transition-all ease-in-out rounded-md w-full"
+          className="cursor-pointer transition-all ease-in-out"
         />
         <IconCornerButton
           movieId={movie.imdbID}
@@ -28,38 +29,20 @@ export default function MovieCard({ movie }) {
           type="pendiente"
           className="top-2 left-2"
         />
+      </div>
 
-        <div className="min-h-24 text-center flex flex-col justify-center max-w-full">
-          <h3
-            onClick={handleCardClick}
-            title={movie.Title}
-            className="font-bold text-md line-clamp-2 cursor-pointer hover:underline truncate "
-          >
-            {movie.Title} <span>({movie.Year})</span>
-          </h3>
-
-          <p className="text-sm text-gray-500">
-            {movie.Type === "movie" ? "Película" : "Serie"}
-          </p>
-
-          {/* <div className="flex flex-col justify-center items-center gap-y-2 mt-2">
-          <StyledButton
-            variant={isVista(movie.imdbID) ? "secondary" : "primary"}
-            onClick={() => toggleVista(movie.imdbID)}
-          >
-            {isVista(movie.imdbID) ? "Quitar de vistas" : "Añadir a vistas"}
-          </StyledButton>
-
-          <StyledButton
-            variant={isPendiente(movie.imdbID) ? "secondary" : "primary"}
-            onClick={() => togglePendiente(movie.imdbID)}
-          >
-            {isPendiente(movie.imdbID)
-              ? "Quitar de pendientes"
-              : "Añadir a pendientes"}
-          </StyledButton>
-        </div> */}
-        </div>
+      {/* Info */}
+      <div className="min-h-24 text-center flex flex-col justify-center w-full max-w-[200px]">
+        <h3
+          onClick={handleCardClick}
+          title={movie.Title}
+          className="font-bold text-md line-clamp-2 cursor-pointer hover:underline truncate"
+        >
+          {movie.Title} <span>({movie.Year})</span>
+        </h3>
+        <p className="text-sm text-gray-500">
+          {movie.Type === "movie" ? "Película" : "Serie"}
+        </p>
       </div>
     </div>
   );
