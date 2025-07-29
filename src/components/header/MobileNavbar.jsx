@@ -27,7 +27,7 @@ function MobileNavbar() {
     >
       <div className="flex justify-between items-center p-4 shadow ">
         {/* Logo or Title */}
-        <div className="text-lg font-bold">Tu Catálogo</div>
+        <NavItem className={"text-xl"} href="/" label="Tu Catálogo" />
         {/* Hamburger Menu */}
         <button
           className="flex flex-col justify-center items-center w-8 h-8 focus:outline-none"
@@ -54,10 +54,17 @@ function MobileNavbar() {
             <div className="flex flex-col space-y-2 w-full">
               <div className="flex items-center justify-center space-x-4 p-4">
                 {user ? (
-                  <UserDropdown
-                    user={user}
-                    handleLogout={handleLogout}
-                  ></UserDropdown>
+                  <div className="flex flex-col items-center justify-center gap-y-4">
+                    <ThemeButton
+                      className={"py-1.5 mx-10"}
+                      theme={theme}
+                    ></ThemeButton>
+                    <UserDropdown
+                      className={"w-20"}
+                      user={user}
+                      handleLogout={handleLogout}
+                    ></UserDropdown>
+                  </div>
                 ) : (
                   <div className="flex flex-col gap-y-4">
                     <ThemeButton

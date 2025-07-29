@@ -7,9 +7,11 @@ function UserDashboard() {
   return (
     <div className="min-h-[calc(100dvh-64px)] pt-16 container mx-auto p-4">
       <div className="flex items-center justify-center flex-col">
-        <h1 className="text-2xl font-bold mb-4">Dashboard de Usuario</h1>
-        <p className="text-gray-600">
-          Aquí puedes gestionar tus vistas y pendientes.
+        <h1 className="text-2xl font-bold mb-4 text-center">
+          Dashboard de Usuario
+        </h1>
+        <p className=" text-center">
+          Aquí puedes gestionar tus películas/series vistas y pendientes.
         </p>
 
         {/* Componente principal */}

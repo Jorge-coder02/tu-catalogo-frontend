@@ -2,13 +2,15 @@ import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { ChevronDown } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-const UserDropdown = ({ user, handleLogout }) => {
+const UserDropdown = ({ user, handleLogout, className }) => {
   const navigate = useNavigate();
 
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
-        <button className="flex items-center text-sm text-gray-800 bg-gray-100 hover:bg-gray-200 px-2 py-1 rounded-md">
+        <button
+          className={`flex items-center text-sm text-gray-800 bg-primary-bg dark:bg-gray-200 hover:bg-gray-200 px-2 py-1 rounded-md ${className}`}
+        >
           {user}
           <ChevronDown className="ml-1 w-4 h-4" />
         </button>

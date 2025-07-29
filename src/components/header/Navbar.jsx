@@ -35,10 +35,13 @@ function Navbar() {
         </nav>
         <div className="flex items-center justify-center space-x-4 p-4">
           {user ? (
-            <UserDropdown
-              user={user}
-              handleLogout={handleLogout}
-            ></UserDropdown>
+            <>
+              <ThemeButton theme={theme}></ThemeButton>
+              <UserDropdown
+                user={user}
+                handleLogout={handleLogout}
+              ></UserDropdown>
+            </>
           ) : (
             <>
               <ThemeButton theme={theme}></ThemeButton> {/* ☀Light/Dark mode */}
