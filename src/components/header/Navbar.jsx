@@ -28,13 +28,15 @@ function Navbar() {
         <div className="flex justify-center items-center p-4">
           <NavItem className={"text-xl"} href="/" label="Tu Catálogo" />
         </div>
-        <nav className="flex items-center justify-center space-x-8 p-4">
+        <nav className="lg:ml-48 flex items-center justify-center space-x-8 p-4">
           <NavItem href="/" label="Inicio" />
           <NavItem href="/search" label="Explorar" />
+          <NavItem href="/dashboard" label="Mi lista" />
           {user && <NavItem href="/dashboard" label="Mi lista" />}
         </nav>
         <div className="flex items-center justify-center space-x-4 p-4">
           {user ? (
+            // ✔ Sesión iniciada
             <>
               <ThemeButton theme={theme}></ThemeButton>
               <UserDropdown
@@ -43,6 +45,7 @@ function Navbar() {
               ></UserDropdown>
             </>
           ) : (
+            // ✖ Sin sesión
             <>
               <ThemeButton theme={theme}></ThemeButton> {/* ☀Light/Dark mode */}
               <Link to="/login">
