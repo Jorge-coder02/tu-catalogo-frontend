@@ -1,12 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import PosterImage from "./PosterImage";
-import StyledButton from "./Button.styles";
-import useMovieActions from "../../hooks/useMovieActions";
+import IconCornerButton from "./IconCornerButton";
 
 export default function MovieCard({ movie }) {
   const navigate = useNavigate();
-  const { isVista, isPendiente, toggleVista, togglePendiente } =
-    useMovieActions();
 
   const handleCardClick = () => {
     navigate(`/movie/${movie.imdbID}`);
@@ -14,27 +11,38 @@ export default function MovieCard({ movie }) {
 
   return (
     <div className="flex flex-col items-center rounded-lg p-4 gap-3 w-full">
-      <PosterImage
-        onClick={handleCardClick}
-        src={movie.Poster}
-        alt={movie.Title}
-        className="cursor-pointer hover:opacity-90 transition-all ease-in-out "
-      />
-
-      <div className="min-h-24 text-center flex flex-col justify-center max-w-full">
-        <h3
+      <div className="relative w-full">
+        <PosterImage
           onClick={handleCardClick}
-          title={movie.Title}
-          className="font-bold text-md line-clamp-2 cursor-pointer hover:underline truncate "
-        >
-          {movie.Title} <span>({movie.Year})</span>
-        </h3>
+          src={movie.Poster}
+          alt={movie.Title}
+          className="cursor-pointer hover:opacity-90 transition-all ease-in-out rounded-md w-full"
+        />
+        <IconCornerButton
+          movieId={movie.imdbID}
+          type="vista"
+          className="top-2 right-2"
+        />
+        <IconCornerButton
+          movieId={movie.imdbID}
+          type="pendiente"
+          className="top-2 left-2"
+        />
 
-        <p className="text-sm text-gray-500">
-          {movie.Type === "movie" ? "Película" : "Serie"}
-        </p>
+        <div className="min-h-24 text-center flex flex-col justify-center max-w-full">
+          <h3
+            onClick={handleCardClick}
+            title={movie.Title}
+            className="font-bold text-md line-clamp-2 cursor-pointer hover:underline truncate "
+          >
+            {movie.Title} <span>({movie.Year})</span>
+          </h3>
 
-        <div className="flex flex-col justify-center items-center gap-y-2 mt-2">
+          <p className="text-sm text-gray-500">
+            {movie.Type === "movie" ? "Película" : "Serie"}
+          </p>
+
+          {/* <div className="flex flex-col justify-center items-center gap-y-2 mt-2">
           <StyledButton
             variant={isVista(movie.imdbID) ? "secondary" : "primary"}
             onClick={() => toggleVista(movie.imdbID)}
@@ -50,6 +58,7 @@ export default function MovieCard({ movie }) {
               ? "Quitar de pendientes"
               : "Añadir a pendientes"}
           </StyledButton>
+        </div> */}
         </div>
       </div>
     </div>

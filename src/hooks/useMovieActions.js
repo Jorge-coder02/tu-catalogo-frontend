@@ -1,5 +1,4 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import {
   addToViews,
   removeFromViews,
@@ -15,7 +14,6 @@ import {
 
 export default function useMovieActions() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const { user } = useSelector((state) => state.auth);
   const { vistas, pendientes } = useSelector((state) => state.movies);
@@ -25,8 +23,7 @@ export default function useMovieActions() {
 
   const checkAuth = () => {
     if (!user) {
-      alert("Debes iniciar sesión.");
-      navigate("/login");
+      alert("Debes iniciar sesión para realizar esta acción.");
       return false;
     }
     return true;
