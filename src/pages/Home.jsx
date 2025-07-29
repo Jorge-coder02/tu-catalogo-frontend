@@ -38,7 +38,10 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-[calc(100dvh-64px)] pt-16 container mx-auto p-4">
+    <div
+      className="min-h-[calc(100dvh-64px)] pt-16 container mx-auto p-4
+      "
+    >
       <div className="flex flex-col justify-center items-center">
         <h1 className="text-3xl font-bold">🏠 Página de inicio</h1>
         <p className="text-center mt-4">
@@ -50,13 +53,13 @@ export default function Home() {
           <h2 className="text-center text-2xl font-bold leading-none">
             🔍 Búsqueda de películas
             <br />
-            <span className="text-gray-500 text-sm">
+            <span className="text-gray- text-sm">
               {" "}
               (Por su nombre original)
             </span>
           </h2>
           <input
-            className="border px-4 py-2 rounded"
+            className="border px-4 py-2 rounded dark:text-black"
             placeholder="Inception..."
             type="text"
             value={term}
@@ -75,7 +78,7 @@ export default function Home() {
             <div className="flex md:flex-row flex-col space-y-2 items-center gap-x-8">
               <h2 className="text-2xl font-bold">🎬 Resultados de búsqueda</h2>
               {/* Pelis/Series */}
-              <div className="flex items-center gap-x-4 border px-4 py-2">
+              <div className="flex items-center gap-x-4 border border-black px-4 py-2">
                 <CategoryButton
                   value="Películas"
                   selectedCategory={selectedCategory}

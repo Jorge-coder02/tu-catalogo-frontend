@@ -16,8 +16,10 @@ export default function LabeledInput({
         type={type}
         placeholder={placeholder}
         className={`${
-          error ? "ring-red-500 focus:ring-red-500" : "focus:ring-blue-500 "
-        } rounded-lg px-4 py-2 focus:outline-none focus:ring-2 ring-2 ring-gray-300 transition-colors duration-200`}
+          error
+            ? "ring-red-500 focus:ring-red-500"
+            : "focus:ring-blue-500 dark:focus:ring-blue-800"
+        } rounded-lg px-4 py-2 focus:outline-none focus:ring-2 ring-2 ring-gray-300 transition-colors duration-200 dark:bg-gray-800`}
         {...props}
       />
       {error && <p className="mt-1 text-sm text-red-600">{error}</p>}

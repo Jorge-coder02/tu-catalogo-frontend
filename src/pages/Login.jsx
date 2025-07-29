@@ -74,13 +74,16 @@ export default function Login() {
   };
 
   return (
-    <div className="flex justify-center pt-20 p-4 text-xl min-h-[calc(100dvh-64px)]">
+    <div
+      className="flex justify-center pt-20 p-4 text-xl min-h-[calc(100dvh-64px)]
+     bg-primary-bg text-primary-text dark:bg-primary-dark-bg dark:text-white"
+    >
       {/* Contenedor principal */}
       <div className="flex flex-col items-center gap-4 w-full max-w-xl">
         <h1 className="text-2xl font-semibold">👨‍💼 Iniciar sesión</h1>
         {/* Formulario */}
         <div
-          className="bg-white flex flex-col items-center mt-4 w-full border-2 border-blue-400 py-14 px-6 rounded-lg shadow-lg
+          className=" flex flex-col items-center mt-4 w-full border-2 border-blue-400 dark:border-blue-800 py-14 px-6 rounded-lg shadow-lg
               gap-2 [&>input]:w-full [&>input]:p-2 [&>input]:border [&>input]:rounded-lg"
         >
           <LabeledInput

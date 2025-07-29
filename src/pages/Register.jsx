@@ -85,8 +85,9 @@ export default function Register() {
         <h1 className="text-2xl font-semibold">👨‍💼 Registro</h1>
         {/* Formulario */}
         <div
-          className="bg-white flex flex-col items-center mt-4 w-full border-2 border-blue-400 py-14 px-6 rounded-lg shadow-lg
-              gap-2 [&>input]:w-full [&>input]:p-2 [&>input]:border [&>input]:rounded-lg"
+          className="flex flex-col items-center mt-4 w-full border-2 border-blue-400 dark:border-blue-800 py-14 px-6 rounded-lg shadow-lg
+              gap-2 [&>input]:w-full [&>input]:p-2 [&>input]:border [&>input]:rounded-lg
+                bg-primary-bg text-primary-text dark:bg-primary-dark-bg dark:text-white"
         >
           <LabeledInput
             id="username"

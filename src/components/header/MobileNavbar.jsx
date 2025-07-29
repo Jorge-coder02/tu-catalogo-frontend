@@ -1,9 +1,9 @@
 import NavItem from "./NavItem";
 import Button from "../ui/Button.styles";
-import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../store/authSlice";
+import ThemeButton from "../ui/ThemeButton";
 
 import UserDropdown from "./UserDropdown"; // Dropdown profile menu
 
@@ -11,6 +11,7 @@ function MobileNavbar() {
   // Redux
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
+  const theme = useSelector((state) => state.theme.mode);
 
   const [open, setOpen] = useState(false);
 
@@ -20,8 +21,11 @@ function MobileNavbar() {
   };
 
   return (
-    <header className="w-full relative">
-      <div className="flex justify-between items-center p-4 bg-white shadow">
+    <header
+      className="w-full relative
+      bg-primary-bg text-primary-text dark:bg-secondary-dark-bg dark:text-primary-dark-text"
+    >
+      <div className="flex justify-between items-center p-4 shadow ">
         {/* Logo or Title */}
         <div className="text-lg font-bold">Tu Catálogo</div>
         {/* Hamburger Menu */}
@@ -30,15 +34,18 @@ function MobileNavbar() {
           onClick={() => setOpen((open) => !open)}
           aria-label="Abrir menú"
         >
-          <span className="block w-6 h-0.5 bg-gray-700 mb-1"></span>
-          <span className="block w-6 h-0.5 bg-gray-700 mb-1"></span>
-          <span className="block w-6 h-0.5 bg-gray-700"></span>
+          <span className="block w-6 h-0.5 bg-gray-700 dark:bg-primary-bg mb-1"></span>
+          <span className="block w-6 h-0.5 bg-gray-700 dark:bg-primary-bg mb-1"></span>
+          <span className="block w-6 h-0.5 bg-gray-700 dark:bg-primary-bg"></span>
         </button>
       </div>
       {/* Dropdown Menu */}
       {open && (
-        <div className="bg-white shadow-md absolute top-16 left-0 w-full z-50">
-          <nav className="flex flex-col items-center space-y-4 p-4 text-gray-700">
+        <div
+          className="bg-white shadow-md absolute top-16 left-0 w-full z-50 
+          bg-primary-bg text-primary-text dark:bg-secondary-dark-bg dark:text-primary-dark-text"
+        >
+          <nav className="flex flex-col items-center space-y-4 p-4">
             <NavItem href="/" label="Inicio" />
             <NavItem href="/search" label="Explorar" />
             {user && <NavItem href="/dashboard" label="Mi lista" />}
@@ -52,19 +59,25 @@ function MobileNavbar() {
                     handleLogout={handleLogout}
                   ></UserDropdown>
                 ) : (
-                  <>
-                    <NavItem href="/login">
-                      <Button>Iniciar sesión</Button>
-                    </NavItem>
-                    <NavItem href="/register">
-                      <Button
-                        variant="secondary"
-                        className="bg-blue-500 text-white"
-                      >
-                        Registro
-                      </Button>
-                    </NavItem>
-                  </>
+                  <div className="flex flex-col gap-y-4">
+                    <ThemeButton
+                      className={"py-1.5 mx-10"}
+                      theme={theme}
+                    ></ThemeButton>{" "}
+                    <div className="flex gap-x-3">
+                      <NavItem href="/login">
+                        <Button>Iniciar sesión</Button>
+                      </NavItem>
+                      <NavItem href="/register">
+                        <Button
+                          variant="secondary"
+                          className="bg-blue-500 text-white"
+                        >
+                          Registro
+                        </Button>
+                      </NavItem>
+                    </div>
+                  </div>
                 )}
               </div>
             </div>
