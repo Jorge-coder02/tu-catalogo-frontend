@@ -22,11 +22,16 @@ export async function searchMoviesByCategory(categoryId) {
 }
 
 export async function newMovies() {
-  const res = await fetch(
-    `${BASE_URL}?apikey=${API_KEY}&s=new&y=2025&type=movie&page=1`
-  );
-  const data = await res.json();
-  return data;
+  try {
+    const res = await fetch(
+      `https://api.themoviedb.org/3/movie/now_playing?api_key=${TMDB_API_KEY}&language=es-ES&page=1`
+    );
+    const data = await res.json();
+    return data.results || [];
+  } catch (error) {
+    console.error("Error al obtener películas nuevas:", error);
+    return [];
+  }
 }
 
 // Consulta API TMDB para más info e imágenes
