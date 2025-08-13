@@ -8,6 +8,27 @@ export async function searchMovies(query) {
   return data;
 }
 
+export async function searchMoviesByCategory(categoryId) {
+  const url = `https://api.themoviedb.org/3/discover/movie?api_key=${TMDB_API_KEY}&with_genres=${categoryId}&language=es-ES&sort_by=popularity.desc&page=1`;
+
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+    return data.results || [];
+  } catch (error) {
+    console.error("Error fetching category:", error);
+    return [];
+  }
+}
+
+export async function newMovies() {
+  const res = await fetch(
+    `${BASE_URL}?apikey=${API_KEY}&s=new&y=2025&type=movie&page=1`
+  );
+  const data = await res.json();
+  return data;
+}
+
 // Consulta API TMDB para más info e imágenes
 export async function fetchTMDBMovieById(imdbID) {
   const res = await fetch(

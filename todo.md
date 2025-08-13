@@ -1,6 +1,5 @@
 # ToDo
 
-- arreglar ruta imgnotfound build
 - bcrypt en backend para contraseñas
 
 - backoffice (gestión usuarios)

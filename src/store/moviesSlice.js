@@ -3,12 +3,17 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   vistas: [],
   pendientes: [],
+  categoriaSeleccionada: "all", // Para filtrar por categoría
 };
 
 const moviesSlice = createSlice({
   name: "movies",
   initialState,
   reducers: {
+    // Categoría seleccionada filtor
+    setCategoriaSeleccionada: (state, action) => {
+      state.categoriaSeleccionada = action.payload;
+    },
     // Vistas 👀
     setVistas: (state, action) => {
       state.vistas = action.payload;
@@ -52,5 +57,6 @@ export const {
   setPendientes,
   clearPendientes,
   removePendiente,
+  setCategoriaSeleccionada,
 } = moviesSlice.actions;
 export default moviesSlice.reducer;

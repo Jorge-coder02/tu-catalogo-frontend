@@ -30,7 +30,7 @@ function Navbar() {
         </div>
         <nav className="lg:ml-48 flex items-center justify-center space-x-8 p-4">
           <NavItem href="/" label="Inicio" />
-          <NavItem href="/search" label="Explorar" />
+          <NavItem href="/explore" label="Explorar" />
           <NavItem href="/dashboard" label="Mi lista" />
           {user && <NavItem href="/dashboard" label="Mi lista" />}
         </nav>

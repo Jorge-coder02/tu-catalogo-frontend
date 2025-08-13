@@ -42,12 +42,12 @@ function MobileNavbar() {
       {/* Dropdown Menu */}
       {open && (
         <div
-          className="bg-white shadow-md absolute top-16 left-0 w-full z-50 
+          className="shadow-md absolute top-16 left-0 w-full z-50 
           bg-primary-bg text-primary-text dark:bg-secondary-dark-bg dark:text-primary-dark-text"
         >
           <nav className="flex flex-col items-center space-y-4 p-4">
             <NavItem href="/" label="Inicio" />
-            <NavItem href="/search" label="Explorar" />
+            <NavItem href="/explore" label="Explorar" />
             {user && <NavItem href="/dashboard" label="Mi lista" />}
             {/* <NavItem href="/dashboard" label="Dashboard" />
             <NavItem href="/search" label="Buscar" /> */}
