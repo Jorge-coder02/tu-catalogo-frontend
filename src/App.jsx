@@ -16,7 +16,7 @@ export default function App() {
   }, [theme]);
 
   return (
-    <div className="min-h-[calc(100dvh-64px)] bg-primary-bg text-primary-text dark:bg-primary-dark-bg dark:text-white">
+    <div className="min-h-[calc(100dvh-64px)] bg-[#f5f5f5] text-primary-text dark:bg-primary-dark-bg dark:text-white">
       <Navbar />
       <AppRoutes />
     </div>

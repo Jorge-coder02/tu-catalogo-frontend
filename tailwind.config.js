@@ -6,7 +6,7 @@ export default {
     extend: {
       colors: {
         // 🌞 Light
-        "primary-bg": "#F9FAFB", // fondo claro
+        "primary-bg": "#c9e4ff", // fondo claro
         "primary-text": "#1F2937", // gris oscuro para texto en claro
         // 🌙 Dark
         "primary-dark-bg": "#111827", // fondo primary

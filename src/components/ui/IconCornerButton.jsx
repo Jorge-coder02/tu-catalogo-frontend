@@ -30,7 +30,7 @@ function IconCornerButton({ movieId, type, className = "" }) {
   return (
     <button
       onClick={handleClick}
-      className={`absolute bg-primary-bg hover:bg-gray-100 dark:hover:bg-gray-500 dark:bg-gray-700 dark:text-white rounded-md shadow md:p-1 p-2 text-xs transition ${className}`}
+      className={`absolute bg-[#f5f5f5] hover:bg-gray-200 dark:hover:bg-gray-500 dark:bg-gray-700 dark:text-white rounded-md shadow md:p-1 p-2 text-xs transition ${className}`}
     >
       {/* Visible en escritorio */}
       <span className="hidden sm:inline">{label}</span>
