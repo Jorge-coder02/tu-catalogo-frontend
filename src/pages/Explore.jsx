@@ -60,14 +60,6 @@ function Explore() {
     fetchCategoryData();
   }, [categoriaSeleccionada]);
 
-  //   useEffect(() => {
-  //     console.log("Array results: ", data);
-  //     console.log(
-  //       "IDs; ",
-  //       data.map((movie) => movie.id)
-  //     );
-  //   }, [data]);
-
   return (
     <div className="min-h-[calc(100dvh-64px)] pt-16 container mx-auto p-4">
       <div className="flex flex-col justify-center items-center">
@@ -86,12 +78,7 @@ function Explore() {
         {/* Mostrar películas */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-4 mt">
           {data &&
-            data.map((movie) => (
-              <MovieCardTmdb
-                key={movie.id || movie.movieId || movie.imdbID}
-                movie={movie}
-              />
-            ))}
+            data.map((movie) => <MovieCardTmdb key={movie.id} movie={movie} />)}
         </div>
       </div>
     </div>

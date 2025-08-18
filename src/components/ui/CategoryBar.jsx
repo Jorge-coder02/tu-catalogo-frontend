@@ -12,7 +12,7 @@ function CategoryBar() {
           dispatch(setCategoriaSeleccionada("Accion"));
         }}
         label={"Accion"}
-        className="bg-blue-500 hover:bg-blue-600"
+        className="bg-blue-500 hover:bg-blue-700"
       />
       <Button
         onClick={() => {

@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import PosterImage from "./PosterImage";
 import IconCornerButton from "./IconCornerButton";
+import { useEffect } from "react";
 
 export default function MovieCardTMDB({ movie }) {
   const navigate = useNavigate();
@@ -9,6 +10,10 @@ export default function MovieCardTMDB({ movie }) {
     // Usamos el id de TMDB
     navigate(`/movie/${movie.id}`);
   };
+
+  useEffect(() => {
+    console.log("📦 Datos de la película:", movie.id);
+  }, [movie]);
 
   return (
     <div className="flex flex-col items-center rounded-lg p-4 gap-3 w-full">

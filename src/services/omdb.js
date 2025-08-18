@@ -35,12 +35,31 @@ export async function newMovies() {
 }
 
 // Consulta API TMDB para más info e imágenes
-export async function fetchTMDBMovieById(imdbID) {
-  const res = await fetch(
-    `https://api.themoviedb.org/3/find/${imdbID}?api_key=${TMDB_API_KEY}&external_source=imdb_id`
-  );
-  const data = await res.json();
-  return data.movie_results[0]; // Puede estar vacío si no lo encuentra
+export async function fetchTMDBMovieById(id) {
+  try {
+    let res;
+
+    if (id.startsWith("tt")) {
+      // Caso: es un imdbID → usar endpoint /find
+      res = await fetch(
+        `https://api.themoviedb.org/3/find/${id}?api_key=${TMDB_API_KEY}&external_source=imdb_id&language=es-ES`
+      );
+      const data = await res.json();
+      return data.movie_results[0] || null;
+    } else {
+      // Caso: es un tmdbID → usar endpoint /movie/{id}
+      res = await fetch(
+        `https://api.themoviedb.org/3/movie/${id}?api_key=${TMDB_API_KEY}&language=es-ES&append_to_response=videos,images`
+      );
+      if (!res.ok) {
+        throw new Error("Error al obtener la película de TMDB");
+      }
+      return await res.json();
+    }
+  } catch (error) {
+    console.error("Error en fetchTMDBMovieById:", error);
+    return null;
+  }
 }
 
 export async function getMovieById(imdbID) {

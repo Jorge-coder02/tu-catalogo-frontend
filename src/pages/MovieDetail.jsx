@@ -17,12 +17,38 @@ export default function MovieDetail() {
       </div>
     );
 
-  if (!movie)
+  if (!movie && !infoMovie)
     return (
       <div className="p-10 text-center text-red-500 font-semibold">
         No se pudo cargar la película.
       </div>
     );
+
+  // Normalizamos los datos para que funcionen tanto OMDb como TMDb
+  const normalizedMovie = movie
+    ? movie // OMDb
+    : {
+        Title: infoMovie?.title,
+        Year: infoMovie?.release_date?.slice(0, 4),
+        Genre: infoMovie?.genres?.map((g) => g.name).join(", "),
+        Director:
+          infoMovie?.credits?.crew?.find((c) => c.job === "Director")?.name ||
+          "N/A",
+        Actors:
+          infoMovie?.credits?.cast
+            ?.slice(0, 5)
+            .map((c) => c.name)
+            .join(", ") || "N/A",
+        imdbRating: infoMovie?.vote_average || "N/A",
+        Plot: infoMovie?.overview || "No disponible",
+        Poster: infoMovie?.poster_path
+          ? `https://image.tmdb.org/t/p/w500${infoMovie.poster_path}`
+          : "/placeholder.jpg",
+        Backdrop: infoMovie?.backdrop_path
+          ? `https://image.tmdb.org/t/p/original${infoMovie.backdrop_path}`
+          : "/img/imgnotfound.jpg",
+        imdbID: infoMovie?.id, // Usamos el ID de TMDb
+      };
 
   return (
     <div>
@@ -45,33 +71,35 @@ export default function MovieDetail() {
         </button>
       </div>
 
-      <div className="p-12 md:pt-8 md:pb-20 mt-10 flex md:flex-row flex-col gap-x-12 items-center justify-center">
+      <div className="p-12 md:pb-20 mt-10 flex md:flex-row flex-col gap-x-12 items-center justify-center">
         <div className="flex flex-col items-center">
-          <MovieCard movie={movie} />
+          <MovieCard movie={normalizedMovie} />
         </div>
 
         <div className="flex flex-col gap-y-10 max-w-md pb-16">
           <div>
             <h1 className="text-2xl font-bold mb-2">
-              {movie.Title} ({movie.Year})
+              {normalizedMovie.Title} ({normalizedMovie.Year})
             </h1>
             <p>
-              <strong>Género:</strong> {movie.Genre}
+              <strong>Género:</strong> {normalizedMovie.Genre || "N/A"}
             </p>
             <p>
-              <strong>Director:</strong> {movie.Director}
+              <strong>Director:</strong> {normalizedMovie.Director || "N/A"}
             </p>
             <p>
-              <strong>Reparto:</strong> {movie.Actors}
+              <strong>Reparto:</strong> {normalizedMovie.Actors || "N/A"}
             </p>
             <p>
-              <strong>IMDb:</strong> {movie.imdbRating}/10
+              <strong>IMDb:</strong> {normalizedMovie.imdbRating || "N/A"}/10
             </p>
           </div>
 
           <div>
             <strong>Sinopsis:</strong>{" "}
-            <span className="font-semibold">{movie.Plot}</span>
+            <span className="font-semibold">
+              {normalizedMovie.Plot || "No disponible"}
+            </span>
           </div>
 
           {movieTrailer && (
